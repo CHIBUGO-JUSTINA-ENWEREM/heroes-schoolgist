@@ -201,7 +201,7 @@ function AdminDashboard() {
       formData.append('postedByRole', 'admin');
       if (newsImage) formData.append('image', newsImage);
 
-      await fetch('http://localhost:5000/api/news', {
+      await fetch('https://heroes-schoolgist.onrender.com/api/news', {
         method: 'POST',
         body: formData
       });
@@ -221,7 +221,7 @@ function AdminDashboard() {
   const handleDeleteNews = async (id) => {
     if (!window.confirm('Delete this news post?')) return;
     try {
-      await fetch(`http://localhost:5000/api/news/${id}`, { method: 'DELETE' });
+      await fetch(` https://heroes-schoolgist.onrender.com/api/news/${id}`, { method: 'DELETE' });
       fetchNews();
     } catch (err) {
       alert('Could not delete news post');
