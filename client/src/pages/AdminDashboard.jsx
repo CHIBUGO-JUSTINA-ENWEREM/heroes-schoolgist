@@ -10,6 +10,8 @@ const colors = {
   pine: '#2E7D5B'
 };
 
+const API = 'https://heroes-schoolgist.onrender.com';
+
 const examTypes = ['General', 'JAMB', 'WAEC', 'NECO', 'GCE'];
 
 function AdminDashboard() {
@@ -56,7 +58,7 @@ function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch(`${API}/api/users`, {
         headers: authHeaders()
       });
       const data = await response.json();
@@ -68,7 +70,7 @@ function AdminDashboard() {
 
   const fetchQuestions = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/asked-questions', {
+      const response = await fetch(`${API}/api/asked-questions`, {
         headers: authHeaders()
       });
       const data = await response.json();
@@ -80,7 +82,7 @@ function AdminDashboard() {
 
   const fetchGuidance = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/guidance', {
+      const response = await fetch(`${API}/api/guidance`, {
         headers: authHeaders()
       });
       const data = await response.json();
@@ -92,7 +94,7 @@ function AdminDashboard() {
 
   const fetchNews = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/news');
+      const response = await fetch(`${API}/api/news`);
       const data = await response.json();
       setNewsList(data);
     } catch (err) {
@@ -103,7 +105,7 @@ function AdminDashboard() {
   const handleDeleteUser = async (id) => {
     if (!window.confirm('Delete this user permanently?')) return;
     try {
-      await fetch(`http://localhost:5000/api/users/${id}`, {
+      await fetch(`${API}/api/users/${id}`, {
         method: 'DELETE',
         headers: authHeaders()
       });
@@ -124,7 +126,7 @@ function AdminDashboard() {
       return;
     }
     try {
-      await fetch(`http://localhost:5000/api/asked-questions/${id}`, {
+      await fetch(`${API}/api/asked-questions/${id}`, {
         method: 'PATCH',
         headers: authHeaders(),
         body: JSON.stringify({ answerText, answeredBy: user.name + ' (Admin)' })
@@ -146,7 +148,7 @@ function AdminDashboard() {
       return;
     }
     try {
-      await fetch(`http://localhost:5000/api/guidance/${id}`, {
+      await fetch(`${API}/api/guidance/${id}`, {
         method: 'PATCH',
         headers: authHeaders(),
         body: JSON.stringify({ response, respondedBy: user.name + ' (Admin)' })
@@ -170,7 +172,7 @@ function AdminDashboard() {
     setImporting(true);
     setImportMessage('');
     try {
-      const response = await fetch('http://localhost:5000/api/aloc/import', {
+      const response = await fetch(`${API}/api/aloc/import`, {
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify(importForm)
@@ -201,7 +203,7 @@ function AdminDashboard() {
       formData.append('postedByRole', 'admin');
       if (newsImage) formData.append('image', newsImage);
 
-      await fetch('https://heroes-schoolgist.onrender.com/api/news', {
+      await fetch(`${API}/api/news`, {
         method: 'POST',
         body: formData
       });
@@ -221,7 +223,7 @@ function AdminDashboard() {
   const handleDeleteNews = async (id) => {
     if (!window.confirm('Delete this news post?')) return;
     try {
-      await fetch(` https://heroes-schoolgist.onrender.com/api/news/${id}`, { method: 'DELETE' });
+      await fetch(`${API}/api/news/${id}`, { method: 'DELETE' });
       fetchNews();
     } catch (err) {
       alert('Could not delete news post');
@@ -263,7 +265,7 @@ function AdminDashboard() {
         borderBottom: '1px solid #E4E3DC'
       }}>
         <div style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, color: colors.ink, fontSize: '18px' }}>
-          HEROES SchoolGist — Admin
+          HEROES SchoolGist - Admin
         </div>
         <button
           onClick={handleLogout}
@@ -467,7 +469,7 @@ function AdminDashboard() {
             }}>
               <div>
                 <p style={{ fontSize: '13.5px', color: colors.charcoal, fontWeight: 600 }}>{u.name}</p>
-                <p style={{ fontSize: '12px', color: colors.slate }}>{u.email} — {u.role}</p>
+                <p style={{ fontSize: '12px', color: colors.slate }}>{u.email} - {u.role}</p>
               </div>
               <button
                 onClick={() => handleDeleteUser(u._id)}

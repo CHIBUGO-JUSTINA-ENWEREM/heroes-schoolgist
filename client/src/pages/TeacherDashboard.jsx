@@ -1,6 +1,8 @@
  import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const API = 'https://heroes-schoolgist.onrender.com';
+
 const colors = {
   ink: '#16233F',
   chalk: '#F3F5F1',
@@ -55,7 +57,7 @@ function TeacherDashboard() {
 
   const fetchQuestions = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/asked-questions', {
+      const response = await fetch(`${API}/api/asked-questions`, {
         headers: authHeaders()
       });
       if (!response.ok) {
@@ -71,7 +73,7 @@ function TeacherDashboard() {
 
   const fetchMyVideos = async (teacherId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/videos/teacher/${teacherId}`);
+      const response = await fetch(`${API}/api/videos/teacher/${teacherId}`);
       if (!response.ok) {
         setMyVideos([]);
         return;
@@ -85,7 +87,7 @@ function TeacherDashboard() {
 
   const fetchMyNotes = async (teacherId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/notes/teacher/${teacherId}`);
+      const response = await fetch(`${API}/api/notes/teacher/${teacherId}`);
       if (!response.ok) {
         setMyNotes([]);
         return;
@@ -109,7 +111,7 @@ function TeacherDashboard() {
     }
 
     try {
-      await fetch(`http://localhost:5000/api/asked-questions/${id}`, {
+      await fetch(`${API}/api/asked-questions/${id}`, {
         method: 'PATCH',
         headers: authHeaders(),
         body: JSON.stringify({ answerText, answeredBy: user.name })
@@ -138,7 +140,7 @@ function TeacherDashboard() {
       formData.append('teacherName', user.name);
       formData.append('video', videoFile);
 
-      await fetch('http://localhost:5000/api/videos', {
+      await fetch(`${API}/api/videos`, {
         method: 'POST',
         body: formData
       });
@@ -174,7 +176,7 @@ function TeacherDashboard() {
       formData.append('teacherName', user.name);
       formData.append('note', noteFile);
 
-      await fetch('http://localhost:5000/api/notes', {
+      await fetch(`${API}/api/notes`, {
         method: 'POST',
         body: formData
       });
@@ -194,7 +196,7 @@ function TeacherDashboard() {
 
   const deleteVideo = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/videos/${id}`, { method: 'DELETE' });
+      await fetch(`${API}/api/videos/${id}`, { method: 'DELETE' });
       fetchMyVideos(user.id);
     } catch (err) {
       alert('Could not delete video');
@@ -203,7 +205,7 @@ function TeacherDashboard() {
 
   const deleteNote = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/notes/${id}`, { method: 'DELETE' });
+      await fetch(`${API}/api/notes/${id}`, { method: 'DELETE' });
       fetchMyNotes(user.id);
     } catch (err) {
       alert('Could not delete note');

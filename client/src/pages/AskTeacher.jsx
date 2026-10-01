@@ -1,5 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
+ import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const API = 'https://heroes-schoolgist.onrender.com';
 
 const colors = {
   ink: '#16233F',
@@ -18,7 +20,7 @@ function AskTeacher() {
 
   const fetchMyQuestions = useCallback(async (studentId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/asked-questions/student/${studentId}`);
+      const response = await fetch(`${API}/api/asked-questions/student/${studentId}`);
       const data = await response.json();
       setMyQuestions(data);
     } catch (err) {
@@ -42,7 +44,7 @@ function AskTeacher() {
     if (!questionText.trim()) return;
 
     try {
-      await fetch('http://localhost:5000/api/asked-questions', {
+      await fetch(`${API}/api/asked-questions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

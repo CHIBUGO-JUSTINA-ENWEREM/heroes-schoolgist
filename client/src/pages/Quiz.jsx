@@ -1,6 +1,8 @@
  import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+const API = 'https://heroes-schoolgist.onrender.com';
+
 const colors = {
   ink: '#16233F',
   chalk: '#F3F5F1',
@@ -33,7 +35,7 @@ function Quiz() {
     setSelectedAnswer(null);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/questions?examType=${examType}&subject=${subject}`);
+      const response = await fetch(`${API}/api/questions?examType=${examType}&subject=${subject}`);
       const data = await response.json();
       setQuestions(data);
     } catch (err) {

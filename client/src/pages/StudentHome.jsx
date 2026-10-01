@@ -1,6 +1,8 @@
  import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const API = 'https://heroes-schoolgist.onrender.com';
+
 const colors = {
   ink: '#16233F',
   chalk: '#F3F5F1',
@@ -53,7 +55,7 @@ function StudentHome() {
 
   const fetchVideos = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/videos');
+      const response = await fetch(`${API}/api/videos`);
       const data = await response.json();
       setVideos(data);
     } catch (err) {
@@ -63,7 +65,7 @@ function StudentHome() {
 
   const fetchNotes = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/notes');
+      const response = await fetch(`${API}/api/notes`);
       const data = await response.json();
       setNotes(data);
     } catch (err) {
@@ -73,7 +75,7 @@ function StudentHome() {
 
   const handleWatchVideo = async (video) => {
     try {
-      await fetch(`http://localhost:5000/api/videos/${video._id}/view`, { method: 'POST' });
+      await fetch(`${API}/api/videos/${video._id}/view`, { method: 'POST' });
     } catch (err) {
       // ignore, still open the video
     }
@@ -82,7 +84,7 @@ function StudentHome() {
 
   const handleDownloadNote = async (note) => {
     try {
-      await fetch(`http://localhost:5000/api/notes/${note._id}/download`, { method: 'POST' });
+      await fetch(`${API}/api/notes/${note._id}/download`, { method: 'POST' });
     } catch (err) {
       // ignore, still open the file
     }
